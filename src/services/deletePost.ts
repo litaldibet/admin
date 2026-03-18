@@ -2,14 +2,8 @@ import { deletePost } from "../lib/edgeFunctionsPaths"
 
 export default async function deletePostService(id: string, password: string) {
 
-    if(!password) {
-        return 
-        /*  
-            Vou decidir depois o protocolo de erro, talvez lançar uma exceção ou retornar um objeto específico. 
-            Mas teoricamente, a senha nunca vai vir nula, pois o campo é obrigatório no formulário. De qualquer forma, é bom ter essa verificação para evitar chamadas desnecessárias à API.
-        */
-    }
-
+    if(!password) return { status: 400, data: null, error: "PASSWORD_REQUIRED" }
+    
     try {
 
     const res = await fetch(deletePost, {
@@ -30,17 +24,17 @@ export default async function deletePostService(id: string, password: string) {
     try {
       data = JSON.parse(text)
     } catch {
-      data = text
+      data = { raw: text }
     }
 
     console.log("STATUS:", res.status)
     console.log("RESPOSTA:", data)
 
-    return { status: res.status, data: data }
+    return { status: res.status, data: data, error: null }
 
   } catch (err) {
     console.error("ERRO NA REQUISIÇÃO:", err)
-    return err
+    return { status: 0, data: null, error: err }
   }
 
 }

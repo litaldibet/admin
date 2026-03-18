@@ -10,13 +10,8 @@ export default async function updatePostService(
   images: { file: File; name: string }[], 
   password: string) {
 
-  if(!password) {
-    return 
-    /*  
-        Vou decidir depois o protocolo de erro, talvez lançar uma exceção ou retornar um objeto específico. 
-        Mas teoricamente, a senha nunca vai vir nula, pois o campo é obrigatório no formulário. De qualquer forma, é bom ter essa verificação para evitar chamadas desnecessárias à API.
-    */
-  }
+  if(!password) return { status: 400, data: null, error: "PASSWORD_REQUIRED" }
+  
 
   const form = new FormData()
 
@@ -33,13 +28,26 @@ export default async function updatePostService(
 
   form.append("password", password)
 
-  const res = await fetch(updatePost, {
-    method: "PUT",
-    body: form
-  })
+  try {
+    const res = await fetch(updatePost, {
+      method: "PUT",
+      body: form
+    })
 
-  const json = await res.json()
+    const text = await res.text()
 
-  console.log(res.status, json)
-  return { status: res.status, data: json }
+    let data
+
+    try {
+      data = JSON.parse(text)
+    } catch {
+      data = { raw: text }
+    }
+
+    console.log(res.status, data)
+    return { status: res.status, data: data, error: null }
+  } catch (err) {
+    console.error("ERRO NA REQUISIÇÃO:", err)
+    return { status: 0, data: null, error: err }
+  }
 }
