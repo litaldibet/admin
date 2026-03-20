@@ -1,0 +1,77 @@
+.form-panel {
+  background-color: #e5e7eb;
+  border: 2px solid #1e293b;
+  padding: 10px;
+  box-sizing: border-box;
+  min-height: calc(100vh - 24px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.form-panel-top {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-panel-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-panel-image-list {
+  min-height: 130px;
+  border: 2px solid #1e293b;
+  background-color: #f3f4f6;
+}
+
+.form-panel-select {
+  border: 2px solid #1e293b;
+  height: 38px;
+  background-color: #f3f4f6;
+  color: #0f172a;
+  padding: 0 8px;
+  font-size: 16px;
+}
+
+.form-panel-input-text {
+  border: 2px solid #1e293b;
+  height: 38px;
+  background-color: #f3f4f6;
+  color: #0f172a;
+  padding: 0 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form-panel-input-file {
+  border: 2px solid #1e293b;
+  background-color: #f3f4f6;
+  color: #0f172a;
+  padding: 6px;
+  font-size: 14px;
+}
+
+.form-panel-preview {
+  min-height: 130px;
+  resize: none;
+  border: 2px solid #1e293b;
+  background-color: #f3f4f6;
+  padding: 8px;
+  font-size: 15px;
+  color: #0f172a;
+}
+
+.form-panel-button {
+  border: 2px solid #1e293b;
+  background-color: #334155;
+  color: #f8fafc;
+  font-weight: 700;
+  padding: 4px 14px;
+  font-size: 16px;
+  cursor: pointer;
+  align-self: flex-start;
+}

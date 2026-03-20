@@ -1,0 +1,16 @@
+.app {
+  width: 100%;
+  background-color: #d1d5db;
+  padding: 12px;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #0f172a;
+}
+
+.app-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+  gap: 12px;
+  align-items: stretch;
+}

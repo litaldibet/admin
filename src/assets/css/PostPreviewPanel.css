@@ -1,0 +1,28 @@
+.post-preview-panel {
+  background-color: #e5e7eb;
+  border: 2px solid #1e293b;
+  min-height: calc(100vh - 24px);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.post-preview-panel-cards {
+  border: none;
+  border-bottom: 2px solid #1e293b;
+  background-color: #cbd5e1;
+  color: #0f172a;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 10px 14px;
+  text-align: left;
+  cursor: default;
+}
+
+.post-preview-panel-content {
+  flex: 1;
+  padding: 16px;
+  background-color: #f3f4f6;
+}

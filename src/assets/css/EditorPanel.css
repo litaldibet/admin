@@ -1,0 +1,38 @@
+.editor-panel {
+  background-color: #e5e7eb;
+  border: 2px solid #1e293b;
+  padding: 10px;
+  box-sizing: border-box;
+  min-height: calc(100vh - 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.editor-panel-area {
+  flex: 1;
+  resize: none;
+  border: 2px solid #1e293b;
+  background-color: #f3f4f6;
+  padding: 12px;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #0f172a;
+}
+
+.editor-panel-buttons {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.editor-panel-button {
+  border: 2px solid #1e293b;
+  background-color: #334155;
+  color: #f8fafc;
+  font-weight: 700;
+  padding: 4px 14px;
+  font-size: 16px;
+  cursor: pointer;
+}
