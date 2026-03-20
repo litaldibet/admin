@@ -1,53 +1,38 @@
 import { updatePost } from "../lib/edgeFunctionsPaths"
+import { buildPostFormData, getPasswordRequiredError, handleRequest } from "./shared/requestHelpers"
+import type { UpdatePostServiceParams } from "../types/post"
 
-export default async function updatePostService(
-  id: string, 
-  category: string, 
-  title: string, 
-  preview: string, 
-  content_markdown: string, 
-  banner: File, 
-  images: { file: File; name: string }[], 
-  password: string) {
+export default async function updatePostService({
+  id,
+  category,
+  title,
+  preview,
+  content_markdown,
+  banner,
+  images,
+  password
+}: UpdatePostServiceParams) {
 
-  if(!password) return { status: 400, data: null, error: "PASSWORD_REQUIRED" }
-  
+  const passwordError = getPasswordRequiredError(password)
 
-  const form = new FormData()
+  if (passwordError) return passwordError
 
-  form.append("id", id)
-  form.append("category", category)
-  form.append("title", title)
-  form.append("preview", preview)
-  form.append("content_markdown", content_markdown)
-  form.append( "banner", banner, "banner")
+  const form = buildPostFormData({
+    id,
+    category,
+    title,
+    preview,
+    content_markdown,
+    banner,
+    images,
+    password
+  })
 
-  for (const image of images) {
-    form.append("images", image.file, image.name)
-  }
+  const result = await handleRequest(fetch(updatePost, {
+    method: "PUT",
+    body: form
+  }))
 
-  form.append("password", password)
-
-  try {
-    const res = await fetch(updatePost, {
-      method: "PUT",
-      body: form
-    })
-
-    const text = await res.text()
-
-    let data
-
-    try {
-      data = JSON.parse(text)
-    } catch {
-      data = { raw: text }
-    }
-
-    console.log(res.status, data)
-    return { status: res.status, data: data, error: null }
-  } catch (err) {
-    console.error("ERRO NA REQUISIÇÃO:", err)
-    return { status: 0, data: null, error: err }
-  }
+  console.log(result.status, result.data)
+  return result
 }

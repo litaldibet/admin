@@ -4,7 +4,7 @@ const styles = {
     border: "2px solid #1e293b",
     padding: "10px",
     boxSizing: "border-box" as const,
-    minHeight: "640px",
+    minHeight: "calc(100vh - 24px)",
     display: "flex",
     flexDirection: "column" as const,
     gap: "8px",

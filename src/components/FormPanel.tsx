@@ -6,13 +6,24 @@ const styles = {
     border: "2px solid #1e293b",
     padding: "10px",
     boxSizing: "border-box" as const,
-    minHeight: "640px",
+    minHeight: "calc(100vh - 24px)",
+    display: "flex",
+    flexDirection: "column" as const,
+    justifyContent: "space-between",
+    gap: "12px",
+  },
+  topSection: {
+    display: "flex",
+    flexDirection: "column" as const,
+    gap: "8px",
+  },
+  bottomSection: {
     display: "flex",
     flexDirection: "column" as const,
     gap: "8px",
   },
   imageList: {
-    height: "72px",
+    minHeight: "130px",
     border: "2px solid #1e293b",
     backgroundColor: "#f3f4f6",
   },
@@ -64,23 +75,27 @@ const styles = {
 export default function FormPanel() {
   return (
     <div style={styles.panel}>
-      <section className="images_list" style={styles.imageList}></section>
-      <button className="add_images" style={styles.actionButton}>Adicionar imagens</button>
+      <section style={styles.topSection}>
+        <section className="images_list" style={styles.imageList}></section>
+        <button className="add_images" style={styles.actionButton}>Adicionar imagens</button>
+      </section>
 
-      <InputLabel value="Tipo" />
-      <select name="type" id="type" multiple={false} style={styles.select}>
-        <option value="POST">Post</option>
-        <option value="PROMOTION">Promocao</option>
-      </select>
+      <section style={styles.bottomSection}>
+        <InputLabel value="Tipo" />
+        <select name="type" id="type" multiple={false} style={styles.select}>
+          <option value="POST">Post</option>
+          <option value="PROMOTION">Promocao</option>
+        </select>
 
-      <InputLabel value="Titulo" />
-      <input type="text" style={styles.inputText}></input>
+        <InputLabel value="Titulo" />
+        <input type="text" style={styles.inputText}></input>
 
-      <InputLabel value="Imagem do card" />
-      <input type="file" style={styles.inputFile}></input>
+        <InputLabel value="Imagem do card" />
+        <input type="file" style={styles.inputFile}></input>
 
-      <InputLabel value="Previa" />
-      <textarea style={styles.previewTextArea}></textarea>
+        <InputLabel value="Previa" />
+        <textarea style={styles.previewTextArea}></textarea>
+      </section>
     </div>
   );
 }

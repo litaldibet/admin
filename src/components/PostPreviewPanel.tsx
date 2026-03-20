@@ -2,7 +2,7 @@ const styles = {
   panel: {
     backgroundColor: "#e5e7eb",
     border: "2px solid #1e293b",
-    minHeight: "640px",
+    minHeight: "calc(100vh - 24px)",
     display: "flex",
     flexDirection: "column" as const,
     padding: 0,
