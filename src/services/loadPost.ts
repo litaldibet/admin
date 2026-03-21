@@ -3,16 +3,17 @@ import { handleRequest } from './shared/requestHelpers'
 
 export default async function loadPostService(id: string) {
 
-  const result = await handleRequest(fetch(loadPost, {
+  const url = `${loadPost}?id=${encodeURIComponent(id)}`
+
+  const result = await handleRequest(fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      id: id
-    })
+    }
   }))
 
+  // Lembrar que entre os objetos retornados há apenas a URL do banner e das imagens, não o file em sí, 
+  // Então para exibir a imagem é necessário usar a URL retornada para buscar a imagem no servidor e exibi-la
 
 
   return result;
