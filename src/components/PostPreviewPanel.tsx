@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import loadCardsService from "../services/loadCards";
 import PostDropdownItem from "./PostDropdownItem";
+import { usePostDraft } from "../app/postDraftContext";
+import { MarkdownRenderer } from "./markdown";
 import "../assets/css/PostPreviewPanel.css";
 
 type DropdownPost = {
@@ -49,6 +51,7 @@ function mapResponseDataToDropdownPosts(data: unknown): DropdownPost[] {
 }
 
 export default function PostPreviewPanel() {
+  const { previewMarkdown } = usePostDraft();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoadingCards, setIsLoadingCards] = useState(false);
   const [hasLoadedCards, setHasLoadedCards] = useState(false);
@@ -133,7 +136,11 @@ export default function PostPreviewPanel() {
       ) : null}
 
       <div className="post-preview-panel-content post_preview">
-        <div>Preview</div>
+        {previewMarkdown.trim() ? (
+          <MarkdownRenderer markdown={previewMarkdown} className="post-preview-panel-markdown" />
+        ) : (
+          <div>Preview</div>
+        )}
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ export function PostDraftProvider({ children }: { children: ReactNode }) {
     banner: null,
     tempImages: []
   });
+  const [previewMarkdown, setPreviewMarkdown] = useState("");
 
   const setCategory = useCallback((category: string) => {
     setDraft((prev) => ({ ...prev, category }));
@@ -42,20 +43,24 @@ export function PostDraftProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<PostDraftContextValue>(() => ({
     draft,
+    previewMarkdown,
     setCategory,
     setTitle,
     setPreview,
     setContentMarkdown,
     setBanner,
-    setTempImages
+    setTempImages,
+    setPreviewMarkdown
   }), [
     draft,
+    previewMarkdown,
     setCategory,
     setTitle,
     setPreview,
     setContentMarkdown,
     setBanner,
-    setTempImages
+    setTempImages,
+    setPreviewMarkdown
   ]);
 
   return (

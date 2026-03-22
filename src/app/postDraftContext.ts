@@ -21,12 +21,14 @@ export type PostDraftState = {
 
 export type PostDraftContextValue = {
   draft: PostDraftState;
+  previewMarkdown: string;
   setCategory: (category: string) => void;
   setTitle: (title: string) => void;
   setPreview: (preview: string) => void;
   setContentMarkdown: (content: string) => void;
   setBanner: (banner: File | null) => void;
   setTempImages: (items: TempImageItem[]) => void;
+  setPreviewMarkdown: (markdown: string) => void;
 };
 
 export const PostDraftContext = createContext<PostDraftContextValue | null>(null);

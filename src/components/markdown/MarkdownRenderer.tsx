@@ -10,16 +10,17 @@ type MarkdownRendererProps = {
 
 export default function MarkdownRenderer({ markdown, className }: MarkdownRendererProps) {
   return (
-    <ReactMarkdown
-      className={className}
-      remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeSanitize]}
-      urlTransform={(url, key) => transformMarkdownAssetUrl(url, key)}
-      components={{
-        img: ({ node, ...props }) => <img loading="lazy" decoding="async" {...props} />
-      }}
-    >
-      {markdown}
-    </ReactMarkdown>
+    <div className={className}>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeSanitize]}
+        urlTransform={(url, key) => transformMarkdownAssetUrl(url, key)}
+        components={{
+          img: ({ node, ...props }) => <img loading="lazy" decoding="async" {...props} />
+        }}
+      >
+        {markdown}
+      </ReactMarkdown>
+    </div>
   )
 }

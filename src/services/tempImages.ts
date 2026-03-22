@@ -2,6 +2,7 @@ import { supabase } from "../lib/supabaseClient";
 
 const BUCKET = "temp";
 const TEMP_PREFIX = "";
+const VERSION_SEPARATOR = "__v__";
 
 export type TempStorageImage = {
   name: string;
@@ -54,6 +55,53 @@ function getPublicUrl(path: string): string {
   return data.publicUrl;
 }
 
+function getStorageFileName(path: string): string {
+  return path.split("/").pop() ?? "";
+}
+
+function createVersionToken(): string {
+  const random = Math.random().toString(36).slice(2, 8);
+  return `${Date.now()}_${random}`;
+}
+
+function removeVersionSuffix(baseName: string): string {
+  const index = baseName.lastIndexOf(VERSION_SEPARATOR);
+  if (index < 0) {
+    return baseName;
+  }
+
+  return baseName.slice(0, index);
+}
+
+function extractVersionToken(baseName: string): string | null {
+  const index = baseName.lastIndexOf(VERSION_SEPARATOR);
+  if (index < 0) {
+    return null;
+  }
+
+  const token = baseName.slice(index + VERSION_SEPARATOR.length);
+  return token || null;
+}
+
+function getDisplayNameFromStoragePath(path: string): string {
+  const fileName = getStorageFileName(path);
+  const { baseName } = splitFileName(fileName);
+  return removeVersionSuffix(baseName);
+}
+
+function getVersionTokenFromStoragePath(path: string): string {
+  const fileName = getStorageFileName(path);
+  const { baseName } = splitFileName(fileName);
+  return extractVersionToken(baseName) || "legacy";
+}
+
+function withCacheBuster(path: string): string {
+  const baseUrl = getPublicUrl(path);
+  const version = getVersionTokenFromStoragePath(path);
+  const separator = baseUrl.includes("?") ? "&" : "?";
+  return `${baseUrl}${separator}v=${encodeURIComponent(version)}`;
+}
+
 function buildStoragePath(fileName: string): string {
   if (!TEMP_PREFIX) {
     return fileName;
@@ -62,9 +110,11 @@ function buildStoragePath(fileName: string): string {
   return `${TEMP_PREFIX}/${fileName}`;
 }
 
-function buildTempPath(name: string, extension: string): string {
+function buildTempPath(name: string, extension: string, versionToken?: string): string {
   const normalized = normalizeName(name) || `img_${Date.now()}`;
-  const fileName = extension ? `${normalized}.${extension}` : normalized;
+  const safeToken = versionToken || createVersionToken();
+  const versionedName = `${normalized}${VERSION_SEPARATOR}${safeToken}`;
+  const fileName = extension ? `${versionedName}.${extension}` : versionedName;
 
   return buildStoragePath(fileName);
 }
@@ -89,9 +139,9 @@ export async function listTempImages(): Promise<TempStorageImage[]> {
     .map((item) => {
       const storagePath = buildStoragePath(item.name);
       return {
-        name: splitFileName(item.name).baseName,
+        name: getDisplayNameFromStoragePath(storagePath),
         storagePath,
-        publicUrl: getPublicUrl(storagePath)
+        publicUrl: withCacheBuster(storagePath)
       };
     });
 }
@@ -100,29 +150,31 @@ export async function uploadTempImage(file: File, desiredName: string): Promise<
   const { extension } = splitFileName(file.name);
   const storagePath = buildTempPath(desiredName || splitFileName(file.name).baseName, extension);
 
-  const { error } = await supabase.storage.from(BUCKET).upload(storagePath, file, { upsert: true });
+  const { error } = await supabase.storage.from(BUCKET).upload(storagePath, file, { upsert: false });
 
   if (error) {
     throwStorageError("Falha ao enviar imagem para temp", error);
   }
 
   return {
-    name: splitFileName(storagePath.split("/").pop() ?? "").baseName,
+    name: getDisplayNameFromStoragePath(storagePath),
     storagePath,
-    publicUrl: getPublicUrl(storagePath)
+    publicUrl: withCacheBuster(storagePath)
   };
 }
 
 export async function renameTempImage(currentPath: string, nextName: string): Promise<TempStorageImage> {
   const currentFileName = currentPath.split("/").pop() ?? "";
   const { extension } = splitFileName(currentFileName);
-  const nextPath = buildTempPath(nextName, extension);
+  const currentBaseName = splitFileName(currentFileName).baseName;
+  const keepToken = extractVersionToken(currentBaseName) || createVersionToken();
+  const nextPath = buildTempPath(nextName, extension, keepToken);
 
   if (currentPath === nextPath) {
     return {
-      name: splitFileName(nextPath.split("/").pop() ?? "").baseName,
+      name: getDisplayNameFromStoragePath(nextPath),
       storagePath: nextPath,
-      publicUrl: getPublicUrl(nextPath)
+      publicUrl: withCacheBuster(nextPath)
     };
   }
 
@@ -133,9 +185,9 @@ export async function renameTempImage(currentPath: string, nextName: string): Pr
   }
 
   return {
-    name: splitFileName(nextPath.split("/").pop() ?? "").baseName,
+    name: getDisplayNameFromStoragePath(nextPath),
     storagePath: nextPath,
-    publicUrl: getPublicUrl(nextPath)
+    publicUrl: withCacheBuster(nextPath)
   };
 }
 
