@@ -1,0 +1,29 @@
+.styled-file-input-root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.styled-file-input-native {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.styled-file-input-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  border: 2px solid #1e293b;
+  background-color: #334155;
+  color: #f8fafc;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1;
+  padding: 6px 14px;
+  height: 38px;
+  white-space: nowrap;
+  user-select: none;
+}

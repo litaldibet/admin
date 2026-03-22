@@ -6,10 +6,7 @@ export default async function loadPostService(id: string) {
   const url = `${loadPost}?id=${encodeURIComponent(id)}`
 
   const result = await handleRequest(fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    }
+    method: "GET"
   }))
 
   // Lembrar que entre os objetos retornados há apenas a URL do banner e das imagens, não o file em sí, 

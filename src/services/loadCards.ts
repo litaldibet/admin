@@ -2,12 +2,8 @@ import { loadCards } from '../lib/edgeFunctionsPaths'
 import { handleRequest } from './shared/requestHelpers'
 
 export default async function loadCardsService() {
-
   const result = await handleRequest(fetch(loadCards, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    }
+    method: "GET"
   }))
 
   // Lembrar que entre os objetos retornados há apenas a URL do banner, não o file em sí, 
