@@ -51,3 +51,8 @@
   cursor: pointer;
   min-width: 74px;
 }
+
+.post-dropdown-item-action-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

@@ -9,11 +9,32 @@
   gap: 8px;
 }
 
+.editor-panel-header {
+  border: none;
+  border-bottom: 2px solid #1e293b;
+  background-color: #cbd5e1;
+  color: #0f172a;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 8px 14px;
+  text-align: left;
+  margin: -10px -10px 0 -10px;
+  box-sizing: border-box;
+}
+
 .editor-panel-area {
   flex: 1;
   resize: none;
   border: 2px solid #1e293b;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
   background-color: #f3f4f6;
+  margin: -8px -10px 0 -10px;
   padding: 12px;
   font-size: 16px;
   line-height: 1.4;
@@ -24,6 +45,14 @@
   margin-top: auto;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.editor-panel-buttons-left,
+.editor-panel-buttons-right {
+  display: flex;
+  align-items: center;
   gap: 8px;
 }
 
@@ -35,6 +64,22 @@
   padding: 4px 14px;
   font-size: 16px;
   cursor: pointer;
+}
+
+.editor-panel-icon-button {
+  width: 34px;
+  height: 28px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editor-panel-icon-image {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  display: block;
 }
 
 .editor-panel-modal-backdrop {

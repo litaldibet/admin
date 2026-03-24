@@ -14,15 +14,18 @@
   border-bottom: 2px solid #1e293b;
   background-color: #cbd5e1;
   color: #0f172a;
+  font-family: inherit;
   font-size: 36px;
   font-weight: 700;
   line-height: 1;
-  padding: 10px 14px;
+  min-height: 56px;
+  padding: 8px 14px;
   text-align: left;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-sizing: border-box;
 }
 
 .post-preview-panel-dropdown-icon {
@@ -40,6 +43,15 @@
   padding: 8px;
 }
 
+.post-preview-panel.is-dropdown-open .post-preview-panel-dropdown {
+  flex: 1;
+  min-height: 0;
+  border-bottom: none;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .post-preview-panel-dropdown-message {
   min-height: 42px;
   display: flex;
@@ -54,6 +66,10 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  overflow-y: auto;
+  min-height: 0;
+  flex: 1;
+  padding-right: 2px;
 }
 
 .post-preview-panel-content {
@@ -74,4 +90,55 @@
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+.post-preview-panel-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.post-preview-panel {
+  position: relative;
+}
+
+.post-preview-panel-modal {
+  width: min(360px, 100%);
+  border: 2px solid #1e293b;
+  background-color: #e2e8f0;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.post-preview-panel-modal-title {
+  margin: 0;
+  color: #0f172a;
+  font-size: 24px;
+}
+
+.post-preview-panel-modal-text {
+  margin: 0;
+  color: #1e293b;
+  font-size: 15px;
+}
+
+.post-preview-panel-modal-input {
+  border: 2px solid #1e293b;
+  height: 38px;
+  background-color: #f8fafc;
+  color: #0f172a;
+  padding: 0 8px;
+  font-size: 16px;
+}
+
+.post-preview-panel-modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
 }

@@ -8,7 +8,7 @@ export type BasePostServiceParams = {
   title: string
   preview: string
   content_markdown: string
-  banner: File
+  banner: File | null
   images: PostImage[]
   password: string
 }

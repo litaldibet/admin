@@ -36,7 +36,10 @@ export function buildPostFormData(params: BuildPostFormDataParams): FormData {
   form.append("title", title)
   form.append("preview", preview)
   form.append("content_markdown", content_markdown)
-  form.append("banner", banner, banner.name || "banner")
+
+  if (banner) {
+    form.append("banner", banner, banner.name || "banner")
+  }
 
   for (const image of images) {
     form.append("images", image.file, image.name)

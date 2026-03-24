@@ -19,9 +19,16 @@ export type PostDraftState = {
   tempImages: TempImageItem[];
 };
 
+export type EditSession = {
+  postId: string;
+  postTitle: string;
+};
+
 export type PostDraftContextValue = {
   draft: PostDraftState;
   previewMarkdown: string;
+  editSession: EditSession | null;
+  tempReloadToken: number;
   setCategory: (category: string) => void;
   setTitle: (title: string) => void;
   setPreview: (preview: string) => void;
@@ -29,6 +36,10 @@ export type PostDraftContextValue = {
   setBanner: (banner: File | null) => void;
   setTempImages: (items: TempImageItem[]) => void;
   setPreviewMarkdown: (markdown: string) => void;
+  setDraftValues: (values: Partial<PostDraftState>) => void;
+  startEditSession: (postId: string, postTitle: string) => void;
+  clearEditSession: () => void;
+  requestTempReload: () => void;
 };
 
 export const PostDraftContext = createContext<PostDraftContextValue | null>(null);

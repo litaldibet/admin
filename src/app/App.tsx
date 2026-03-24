@@ -13,6 +13,7 @@ function App() {
           <FormPanel />
           <PostPreviewPanel />
         </div>
+        <div id="app-modal-root"></div>
       </PostDraftProvider>
     </div>
   );

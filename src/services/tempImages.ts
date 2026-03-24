@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabaseClient";
 const BUCKET = "temp";
 const TEMP_PREFIX = "";
 const VERSION_SEPARATOR = "__v__";
+const POST_IMAGES_BUCKET = import.meta.env.VITE_POST_IMAGES_BUCKET ?? "post-images";
 
 export type TempStorageImage = {
   name: string;
@@ -57,6 +58,11 @@ function getPublicUrl(path: string): string {
 
 function getStorageFileName(path: string): string {
   return path.split("/").pop() ?? "";
+}
+
+function getExtension(fileName: string): string {
+  const { extension } = splitFileName(fileName);
+  return extension;
 }
 
 function createVersionToken(): string {
@@ -122,6 +128,12 @@ function buildTempPath(name: string, extension: string, versionToken?: string): 
 function getExtensionFromPath(path: string): string {
   const fileName = path.split("/").pop() ?? "";
   return splitFileName(fileName).extension;
+}
+
+function getBaseNameFromPath(path: string): string {
+  const fileName = getStorageFileName(path);
+  const { baseName } = splitFileName(fileName);
+  return removeVersionSuffix(baseName);
 }
 
 export async function listTempImages(): Promise<TempStorageImage[]> {
@@ -201,6 +213,37 @@ export async function deleteTempImage(path: string): Promise<void> {
   if (error) {
     throwStorageError("Falha ao remover imagem em temp", error);
   }
+}
+
+export async function clearTempImages(): Promise<void> {
+  const items = await listTempImages();
+  const paths = items.map((item) => item.storagePath).filter(Boolean);
+
+  if (paths.length === 0) {
+    return;
+  }
+
+  const { error } = await supabase.storage.from(BUCKET).remove(paths);
+
+  if (error) {
+    throwStorageError("Falha ao limpar imagens de temp", error);
+  }
+}
+
+export async function importPostImageToTemp(postImagePath: string): Promise<TempStorageImage> {
+  const { data, error } = await supabase.storage.from(POST_IMAGES_BUCKET).download(postImagePath);
+
+  if (error) {
+    throwStorageError("Falha ao baixar imagem do post", error);
+  }
+
+  const baseName = getBaseNameFromPath(postImagePath) || "imagem";
+  const extension = getExtension(getStorageFileName(postImagePath));
+  const mime = data.type || (extension ? `image/${extension}` : "application/octet-stream");
+  const fileName = extension ? `${baseName}.${extension}` : baseName;
+  const file = new File([data], fileName, { type: mime });
+
+  return uploadTempImage(file, baseName);
 }
 
 export async function downloadTempImageAsFile(

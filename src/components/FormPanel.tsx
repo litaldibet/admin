@@ -36,11 +36,12 @@ function toErrorMessage(error: unknown, fallback: string): string {
 }
 
 export default function FormPanel() {
-  const { draft, setCategory, setTitle, setPreview, setBanner, setTempImages } = usePostDraft();
+  const { draft, tempReloadToken, setCategory, setTitle, setPreview, setBanner, setTempImages } = usePostDraft();
   const [imageItems, setImageItems] = useState<LocalImageItem[]>([]);
   const [isLoadingTemp, setIsLoadingTemp] = useState(false);
   const [nextImageId, setNextImageId] = useState(1);
   const nextIdRef = useRef(1);
+  const bannerInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -80,11 +81,17 @@ export default function FormPanel() {
     return () => {
       active = false;
     };
-  }, [setTempImages]);
+  }, [setTempImages, tempReloadToken]);
 
   useEffect(() => {
     setTempImages(imageItems);
   }, [imageItems, setTempImages]);
+
+  useEffect(() => {
+    if (!draft.banner && bannerInputRef.current) {
+      bannerInputRef.current.value = "";
+    }
+  }, [draft.banner]);
 
   function handleAddImageItem() {
     const newId = nextImageId;
@@ -317,6 +324,7 @@ export default function FormPanel() {
 
         <InputLabel value="Imagem do card" />
         <input
+          ref={bannerInputRef}
           type="file"
           className="form-panel-input-file"
           accept="image/*"

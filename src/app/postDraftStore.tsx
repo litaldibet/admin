@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import {
   PostDraftContext,
+  type EditSession,
   type PostDraftContextValue,
   type PostDraftState
 } from "./postDraftContext";
@@ -16,6 +17,8 @@ export function PostDraftProvider({ children }: { children: ReactNode }) {
     tempImages: []
   });
   const [previewMarkdown, setPreviewMarkdown] = useState("");
+  const [editSession, setEditSession] = useState<EditSession | null>(null);
+  const [tempReloadToken, setTempReloadToken] = useState(0);
 
   const setCategory = useCallback((category: string) => {
     setDraft((prev) => ({ ...prev, category }));
@@ -41,26 +44,54 @@ export function PostDraftProvider({ children }: { children: ReactNode }) {
     setDraft((prev) => ({ ...prev, tempImages }));
   }, []);
 
+  const setDraftValues = useCallback((values: Partial<PostDraftState>) => {
+    setDraft((prev) => ({ ...prev, ...values }));
+  }, []);
+
+  const startEditSession = useCallback((postId: string, postTitle: string) => {
+    setEditSession({ postId, postTitle });
+  }, []);
+
+  const clearEditSession = useCallback(() => {
+    setEditSession(null);
+  }, []);
+
+  const requestTempReload = useCallback(() => {
+    setTempReloadToken((prev) => prev + 1);
+  }, []);
+
   const value = useMemo<PostDraftContextValue>(() => ({
     draft,
     previewMarkdown,
+    editSession,
+    tempReloadToken,
     setCategory,
     setTitle,
     setPreview,
     setContentMarkdown,
     setBanner,
     setTempImages,
-    setPreviewMarkdown
+    setPreviewMarkdown,
+    setDraftValues,
+    startEditSession,
+    clearEditSession,
+    requestTempReload
   }), [
     draft,
     previewMarkdown,
+    editSession,
+    tempReloadToken,
     setCategory,
     setTitle,
     setPreview,
     setContentMarkdown,
     setBanner,
     setTempImages,
-    setPreviewMarkdown
+    setPreviewMarkdown,
+    setDraftValues,
+    startEditSession,
+    clearEditSession,
+    requestTempReload
   ]);
 
   return (
