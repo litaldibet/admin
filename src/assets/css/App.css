@@ -1,10 +1,27 @@
+:root {
+  --bg-page: #0a1322;
+  --bg-panel: #101d33;
+  --bg-panel-soft: #162742;
+  --bg-surface: #1a2e4d;
+  --bg-input: #0f1c31;
+  --border-strong: #30486e;
+  --text-main: #e6eefb;
+  --text-muted: #b7c7e4;
+  --button-bg: #27466a;
+  --button-bg-hover: #2e5480;
+  --button-text: #f3f8ff;
+  --danger-bg: #892839;
+  --danger-text: #ffd8df;
+  --overlay: rgba(3, 8, 18, 0.72);
+}
+
 .app {
   width: 100%;
-  background-color: #d1d5db;
+  background-color: var(--bg-page);
   padding: 12px;
   box-sizing: border-box;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #0f172a;
+  color: var(--text-main);
 }
 
 .app-container {
@@ -22,7 +39,7 @@
 .app-modal-backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(15, 23, 42, 0.45);
+  background-color: var(--overlay);
   display: flex;
   align-items: center;
   justify-content: center;

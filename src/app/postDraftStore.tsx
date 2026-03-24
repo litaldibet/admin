@@ -9,7 +9,7 @@ import {
 
 export function PostDraftProvider({ children }: { children: ReactNode }) {
   const [draft, setDraft] = useState<PostDraftState>({
-    category: "POST",
+    category: "BLOG",
     title: "",
     preview: "",
     content_markdown: "",

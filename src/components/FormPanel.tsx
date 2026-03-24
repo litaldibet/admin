@@ -310,7 +310,7 @@ export default function FormPanel() {
           value={draft.category}
           onChange={(event) => setCategory(event.target.value)}
         >
-          <option value="POST">Post</option>
+          <option value="BLOG">Blog</option>
           <option value="PROMOCAO">Promocao</option>
         </select>
 

@@ -232,7 +232,7 @@ function hasPendingDraftChanges(draft: PostDraftState, isEditing: boolean): bool
     return true;
   }
 
-  if (draft.category !== "POST") {
+  if (draft.category !== "BLOG") {
     return true;
   }
 
@@ -492,7 +492,7 @@ export default function EditorPanel() {
     await clearTempImages();
 
     setDraftValues({
-      category: "POST",
+      category: "BLOG",
       title: "",
       preview: "",
       content_markdown: "",

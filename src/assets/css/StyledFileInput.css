@@ -16,9 +16,9 @@
   align-items: center;
   justify-content: center;
   width: 160px;
-  border: 2px solid #1e293b;
-  background-color: #334155;
-  color: #f8fafc;
+  border: none;
+  background-color: var(--button-bg);
+  color: var(--button-text);
   font-weight: 700;
   font-size: 16px;
   line-height: 1;

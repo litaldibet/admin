@@ -1,7 +1,7 @@
 .image-list-item {
-  border: 2px solid #1e293b;
-  background-color: #cbd5e1;
-  color: #0f172a;
+  border: none;
+  background-color: var(--bg-panel-soft);
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -27,9 +27,9 @@
 .image-list-item-name-input {
   flex: 1;
   min-width: 0;
-  border: 2px solid #94a3b8;
-  background-color: #aeb7c1;
-  color: #0f172a;
+  border: none;
+  background-color: var(--bg-input);
+  color: var(--text-main);
   height: 38px;
   padding: 0 42px 0 12px;
   font-size: 20px;
@@ -41,9 +41,9 @@
   right: 4px;
   width: 30px;
   height: 30px;
-  border: 2px solid #1e293b;
-  background-color: #334155;
-  color: #f8fafc;
+  border: none;
+  background-color: var(--button-bg);
+  color: var(--button-text);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -56,7 +56,7 @@
 }
 
 .image-list-item-name-input::placeholder {
-  color: #0f172a;
+  color: var(--text-muted);
   opacity: 0.9;
 }
 
@@ -65,9 +65,9 @@
   min-width: 52px;
   height: 38px;
   margin-left: auto;
-  border: 2px solid #1e293b;
-  background-color: #ef4444;
-  color: #0f172a;
+  border: none;
+  background-color: var(--danger-bg);
+  color: var(--danger-text);
   font-size: 28px;
   line-height: 1;
   display: inline-flex;
@@ -84,11 +84,11 @@
 .image-list-item-status {
   font-size: 12px;
   font-weight: 700;
-  color: #334155;
+  color: var(--text-muted);
 }
 
 .image-list-item-error {
   font-size: 12px;
   font-weight: 700;
-  color: #991b1b;
+  color: #ff7f93;
 }

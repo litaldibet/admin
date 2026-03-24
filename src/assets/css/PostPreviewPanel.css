@@ -1,6 +1,6 @@
 .post-preview-panel {
-  background-color: #e5e7eb;
-  border: 2px solid #1e293b;
+  background-color: var(--bg-panel);
+  border: none;
   height: calc(100vh - 24px);
   max-height: calc(100vh - 24px);
   display: flex;
@@ -11,9 +11,8 @@
 
 .post-preview-panel-cards {
   border: none;
-  border-bottom: 2px solid #1e293b;
-  background-color: #cbd5e1;
-  color: #0f172a;
+  background-color: var(--bg-panel-soft);
+  color: var(--text-main);
   font-family: inherit;
   font-size: 36px;
   font-weight: 700;
@@ -38,8 +37,7 @@
 
 .post-preview-panel-dropdown {
   min-height: 56px;
-  border-bottom: 2px solid #1e293b;
-  background-color: #dbe3ec;
+  background-color: var(--bg-surface);
   padding: 8px;
 }
 
@@ -57,7 +55,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0f172a;
+  color: var(--text-muted);
   font-size: 16px;
   font-weight: 700;
 }
@@ -76,12 +74,12 @@
   flex: 1;
   min-height: 0;
   padding: 16px;
-  background-color: #f3f4f6;
+  background-color: var(--bg-input);
   overflow-y: auto;
 }
 
 .post-preview-panel-markdown {
-  color: #0f172a;
+  color: var(--text-main);
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
@@ -95,7 +93,7 @@
 .post-preview-panel-modal-backdrop {
   position: absolute;
   inset: 0;
-  background-color: rgba(15, 23, 42, 0.45);
+  background-color: var(--overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,8 +106,8 @@
 
 .post-preview-panel-modal {
   width: min(360px, 100%);
-  border: 2px solid #1e293b;
-  background-color: #e2e8f0;
+  border: none;
+  background-color: var(--bg-panel-soft);
   padding: 12px;
   display: flex;
   flex-direction: column;
@@ -118,21 +116,21 @@
 
 .post-preview-panel-modal-title {
   margin: 0;
-  color: #0f172a;
+  color: var(--text-main);
   font-size: 24px;
 }
 
 .post-preview-panel-modal-text {
   margin: 0;
-  color: #1e293b;
+  color: var(--text-muted);
   font-size: 15px;
 }
 
 .post-preview-panel-modal-input {
-  border: 2px solid #1e293b;
+  border: none;
   height: 38px;
-  background-color: #f8fafc;
-  color: #0f172a;
+  background-color: var(--bg-input);
+  color: var(--text-main);
   padding: 0 8px;
   font-size: 16px;
 }
