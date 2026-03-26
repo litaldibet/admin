@@ -1,6 +1,6 @@
 import { updatePost } from "../lib/edgeFunctionsPaths"
-import { buildPostFormData, getPasswordRequiredError, handleRequest } from "./shared/requestHelpers"
-import type { UpdatePostServiceParams } from "../types/post"
+import { buildPostFormData, getPasswordRequiredError, handleRequest } from "@shared/services/requestHelpers"
+import type { UpdatePostServiceParams } from "@shared/types/post"
 
 export default async function updatePostService({
   id,

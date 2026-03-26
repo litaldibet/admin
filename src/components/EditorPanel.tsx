@@ -294,6 +294,7 @@ export default function EditorPanel() {
   const [saveErrorList, setSaveErrorList] = useState<string[]>([]);
   const [saveSucceeded, setSaveSucceeded] = useState(false);
   const [isHelpConfirmOpen, setIsHelpConfirmOpen] = useState(false);
+  const [isClearingForm, setIsClearingForm] = useState(false);
   const skipUnloadWarningRef = useRef(false);
 
   useEffect(() => {
@@ -489,19 +490,25 @@ export default function EditorPanel() {
   }
 
   async function handleClearAll() {
-    await clearTempImages();
+    setIsClearingForm(true);
 
-    setDraftValues({
-      category: "BLOG",
-      title: "",
-      preview: "",
-      content_markdown: "",
-      banner: null,
-      tempImages: []
-    });
+    try {
+      await clearTempImages();
 
-    setPreviewMarkdown("");
-    requestTempReload();
+      setDraftValues({
+        category: "BLOG",
+        title: "",
+        preview: "",
+        content_markdown: "",
+        banner: null,
+        tempImages: []
+      });
+
+      setPreviewMarkdown("");
+      requestTempReload();
+    } finally {
+      setIsClearingForm(false);
+    }
   }
 
   function handleOpenWebsite() {
@@ -568,6 +575,15 @@ export default function EditorPanel() {
               <button className="editor-panel-button" onClick={handleHelpConfirmCancel}>Cancelar</button>
               <button className="editor-panel-button" onClick={handleHelpConfirmContinue}>Continuar</button>
             </div>
+          </div>
+        </AppModal>
+      ) : null}
+
+      {isClearingForm ? (
+        <AppModal>
+          <div className="editor-panel-modal" role="dialog" aria-modal="true">
+            <h3 className="editor-panel-modal-title">Limpando formulário</h3>
+            <p className="editor-panel-modal-text">Limpando formulário...</p>
           </div>
         </AppModal>
       ) : null}

@@ -1,6 +1,6 @@
 import { createPost } from "../lib/edgeFunctionsPaths"
-import { buildPostFormData, getPasswordRequiredError, handleRequest } from "./shared/requestHelpers"
-import type { UploadPostServiceParams } from "../types/post"
+import { buildPostFormData, getPasswordRequiredError, handleRequest } from "@shared/services/requestHelpers"
+import type { UploadPostServiceParams } from "@shared/types/post"
 
 export default async function uploadPostService({
   category,

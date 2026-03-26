@@ -1,5 +1,5 @@
 import { loadPost } from '../lib/edgeFunctionsPaths'
-import { handleRequest } from './shared/requestHelpers'
+import { handleRequest } from '@shared/services/requestHelpers'
 
 export default async function loadPostService(id: string) {
 

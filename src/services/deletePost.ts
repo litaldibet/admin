@@ -1,5 +1,5 @@
 import { deletePost } from "../lib/edgeFunctionsPaths"
-import { getPasswordRequiredError, handleRequest } from "./shared/requestHelpers"
+import { getPasswordRequiredError, handleRequest } from "@shared/services/requestHelpers"
 
 export default async function deletePostService(id: string, password: string) {
 

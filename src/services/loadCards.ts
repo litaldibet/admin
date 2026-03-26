@@ -1,5 +1,5 @@
 import { loadCards } from '../lib/edgeFunctionsPaths'
-import { handleRequest } from './shared/requestHelpers'
+import { handleRequest } from '@shared/services/requestHelpers'
 
 export default async function loadCardsService() {
   const result = await handleRequest(fetch(loadCards, {
