@@ -1,13 +1,11 @@
 import { loadCards } from '../lib/edgeFunctionsPaths'
-import { handleRequest } from '@shared/services/requestHelpers'
+import type { LoadCardsResponse } from '@shared/contracts/loadCards'
+import { handleTypedRequest } from '@shared/services/requestHelpers'
 
 export default async function loadCardsService() {
-  const result = await handleRequest(fetch(loadCards, {
+  const result = await handleTypedRequest<LoadCardsResponse>(fetch(loadCards, {
     method: "GET"
   }))
 
-  // Lembrar que entre os objetos retornados há apenas a URL do banner, não o file em sí, 
-  // Então para exibir a imagem é necessário usar a URL retornada para buscar a imagem no servidor e exibi-la
-
-  return result;
+  return result
 }

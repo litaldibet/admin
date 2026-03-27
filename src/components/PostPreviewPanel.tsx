@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import type { LoadCardsSuccessResponse } from "@shared/contracts/loadCards";
 import loadCardsService from "../services/loadCards";
 import deletePostService from "../services/deletePost";
 import loadPostService from "../services/loadPost";
@@ -40,6 +41,10 @@ function extractRequestErrorMessage(data: unknown, status: number): string {
   }
 
   return `Falha ao carregar cards (status ${status}).`;
+}
+
+function isLoadCardsSuccessResponse(data: unknown): data is LoadCardsSuccessResponse {
+  return isObjectRecord(data) && data.success === true && Array.isArray(data.data);
 }
 
 function humanizeErrorMessage(error: string): string {
@@ -300,7 +305,7 @@ export default function PostPreviewPanel() {
       try {
         const result = await loadCardsService();
 
-        if (result.status !== 200 || !isObjectRecord(result.data)) {
+        if (result.status !== 200 || !isLoadCardsSuccessResponse(result.data)) {
           setCardsError(extractRequestErrorMessage(result.data, result.status));
           return;
         }
