@@ -1,5 +1,7 @@
+import { resolvePostImagesBucket } from "@shared/constants/storage"
+
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? ""
-const POST_IMAGES_BUCKET = import.meta.env.VITE_POST_IMAGES_BUCKET ?? "post-images"
+const POST_IMAGES_BUCKET = resolvePostImagesBucket(import.meta.env.VITE_POST_IMAGES_BUCKET)
 
 function normalizeStoragePath(path: string): string {
   const trimmed = path.trim().replace(/^['"]|['"]$/g, "")

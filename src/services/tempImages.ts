@@ -1,9 +1,10 @@
 import { supabase } from "../lib/supabaseClient";
+import { resolvePostImagesBucket } from "@shared/constants/storage";
 
 const BUCKET = "temp";
 const TEMP_PREFIX = "";
 const VERSION_SEPARATOR = "__v__";
-const POST_IMAGES_BUCKET = import.meta.env.VITE_POST_IMAGES_BUCKET ?? "post-images";
+const POST_IMAGES_BUCKET = resolvePostImagesBucket(import.meta.env.VITE_POST_IMAGES_BUCKET);
 
 export type TempStorageImage = {
   name: string;

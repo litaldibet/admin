@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
-import type { LoadCardsSuccessResponse } from "@shared/contracts/loadCards";
+import { isLoadCardsSuccessResponse, type PostCard } from "@shared/contracts/loadCards";
+import { isLoadPostSuccessResponse, type PostDetails } from "@shared/contracts/loadPost";
+import { isObjectRecord } from "@shared/utils/objectGuards";
 import loadCardsService from "../services/loadCards";
 import deletePostService from "../services/deletePost";
 import loadPostService from "../services/loadPost";
@@ -21,20 +23,6 @@ type DropdownPost = {
 
 type DeleteModalState = "closed" | "asking_password" | "submitting" | "result";
 
-type LoadPostResponseData = {
-  id: string;
-  post_type: string;
-  title: string;
-  preview: string;
-  banner_url: string;
-  content_markdown: string;
-  image_paths: string[];
-};
-
-function isObjectRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
-
 function extractRequestErrorMessage(data: unknown, status: number): string {
   if (isObjectRecord(data) && typeof data.error === "string" && data.error) {
     return data.error;
@@ -43,9 +31,6 @@ function extractRequestErrorMessage(data: unknown, status: number): string {
   return `Falha ao carregar cards (status ${status}).`;
 }
 
-function isLoadCardsSuccessResponse(data: unknown): data is LoadCardsSuccessResponse {
-  return isObjectRecord(data) && data.success === true && Array.isArray(data.data);
-}
 
 function humanizeErrorMessage(error: string): string {
   const normalized = error.replace(/_/g, " ").trim().toLowerCase();
@@ -126,77 +111,14 @@ function extractRelativeImagePathsFromMarkdown(markdown: string): string[] {
   return Array.from(paths);
 }
 
-function extractLoadPostData(data: unknown, fallbackPost: DropdownPost): LoadPostResponseData | null {
-  if (!isObjectRecord(data) || !isObjectRecord(data.data)) {
-    return null;
-  }
-
-  const id = typeof data.data.id === "string" ? data.data.id : fallbackPost.id;
-  const postType = typeof data.data.post_type === "string"
-    ? data.data.post_type
-    : (fallbackPost.postType || "PROMOCAO");
-  const title = data.data.title;
-  const preview = typeof data.data.preview === "string"
-    ? data.data.preview
-    : (fallbackPost.preview || "");
-  const bannerUrl = typeof data.data.banner_url === "string" ? data.data.banner_url : fallbackPost.bannerUrl;
-  const contentMarkdown = data.data.content_markdown;
-  const imagePathsRaw = data.data.image_paths;
-
-  const imagePaths = Array.isArray(imagePathsRaw) && imagePathsRaw.every((item) => typeof item === "string")
-    ? imagePathsRaw
-    : extractRelativeImagePathsFromMarkdown(typeof contentMarkdown === "string" ? contentMarkdown : "");
-
-  if (
-    typeof id !== "string" ||
-    typeof postType !== "string" ||
-    typeof title !== "string" ||
-    typeof preview !== "string" ||
-    typeof bannerUrl !== "string" ||
-    typeof contentMarkdown !== "string"
-  ) {
-    return null;
-  }
-
-  return {
-    id,
-    post_type: postType,
-    title,
-    preview,
-    banner_url: bannerUrl,
-    content_markdown: contentMarkdown,
-    image_paths: imagePaths
-  };
-}
-
-function mapResponseDataToDropdownPosts(data: unknown): DropdownPost[] {
-  if (!Array.isArray(data)) {
-    return [];
-  }
-
-  return data.flatMap((item) => {
-    if (!isObjectRecord(item)) {
-      return [];
-    }
-
-    const id = item.id;
-    const title = item.title;
-    const bannerUrl = item.banner_url;
-    const preview = item.preview;
-    const postType = item.post_type;
-
-    if (typeof id !== "string" || typeof title !== "string" || typeof bannerUrl !== "string") {
-      return [];
-    }
-
-    return [{
-      id,
-      title,
-      bannerUrl,
-      preview: typeof preview === "string" ? preview : undefined,
-      postType: typeof postType === "string" ? postType : undefined
-    }];
-  });
+function mapCardsToDropdownPosts(cards: PostCard[]): DropdownPost[] {
+  return cards.map((card) => ({
+    id: card.id,
+    title: card.title,
+    bannerUrl: card.banner_url,
+    preview: card.preview,
+    postType: card.post_type,
+  }));
 }
 
 export default function PostPreviewPanel() {
@@ -256,16 +178,17 @@ export default function PostPreviewPanel() {
 
       const postResult = await loadPostService(editTargetPost.id);
 
-      if (postResult.status !== 200) {
+      if (postResult.status !== 200 || !isLoadPostSuccessResponse(postResult.data)) {
         const backendError = extractBackendError(postResult.data);
         throw new Error(backendError ? humanizeErrorMessage(backendError) : `Falha ao carregar post (status ${postResult.status}).`);
       }
 
-      const postData = extractLoadPostData(postResult.data, editTargetPost);
-
-      if (!postData) {
-        throw new Error("Resposta inválida ao carregar post para edição.");
-      }
+      const postData: PostDetails = {
+        ...postResult.data.data,
+        image_paths: postResult.data.data.image_paths.length > 0
+          ? postResult.data.data.image_paths
+          : extractRelativeImagePathsFromMarkdown(postResult.data.data.content_markdown),
+      };
 
       await Promise.all(postData.image_paths.map((path) => importPostImageToTemp(path)));
 
@@ -310,12 +233,7 @@ export default function PostPreviewPanel() {
           return;
         }
 
-        const mappedPosts = mapResponseDataToDropdownPosts(result.data.data);
-
-        if (mappedPosts.length === 0 && Array.isArray(result.data.data) && result.data.data.length > 0) {
-          setCardsError("Resposta invalida ao carregar cards.");
-          return;
-        }
+        const mappedPosts = mapCardsToDropdownPosts(result.data.data);
 
         setDropdownPosts(mappedPosts);
         setHasLoadedCards(true);
