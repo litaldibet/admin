@@ -19,6 +19,7 @@ const sanitizeSchema = {
 }
 
 export default function MarkdownRenderer({ markdown, className }: MarkdownRendererProps) {
+
   return (
     <div className={className}>
       <ReactMarkdown
@@ -26,7 +27,7 @@ export default function MarkdownRenderer({ markdown, className }: MarkdownRender
         rehypePlugins={[[rehypeRaw], [rehypeSanitize, sanitizeSchema]]}
         urlTransform={(url, key) => transformMarkdownAssetUrl(url, key)}
         components={{
-          img: ({ node, ...props }) => <img loading="lazy" decoding="async" {...props} />
+          img: (props) => <img loading="lazy" decoding="async" {...props} />
         }}
       >
         {markdown}
