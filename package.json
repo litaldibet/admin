@@ -8,10 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-<<<<<<< HEAD
     "predeploy": "pnpm build",
-=======
->>>>>>> f53cbaf96651cf501b3d5e67a3089412cb106347
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
