@@ -1,1 +1,1 @@
-export const MAIN_WEBSITE_URL = "https://www.youtube.com/";
+export const MAIN_WEBSITE_URL = "https://litaldibet.github.io/website/menu";
