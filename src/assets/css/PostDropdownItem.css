@@ -38,8 +38,37 @@
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
-  padding-bottom: 8px;
+  padding-bottom: 15px;
+  padding-top: 10px;
   scrollbar-width: thin;
+  scrollbar-color: rgba(183, 199, 228, 0.65) transparent;
+}
+
+.post-dropdown-item-title::-webkit-scrollbar {
+  height: 6px;
+}
+
+.post-dropdown-item-title::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.post-dropdown-item-title::-webkit-scrollbar-thumb {
+  background-color: rgba(183, 199, 228, 0.65);
+  border-radius: 999px;
+}
+
+.post-dropdown-item-title::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(183, 199, 228, 0.78);
+}
+
+.post-dropdown-item-title::-webkit-scrollbar-thumb:active {
+  background-color: rgba(183, 199, 228, 0.9);
+}
+
+.post-dropdown-item-title::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 .post-dropdown-item-title-text {

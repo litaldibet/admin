@@ -78,11 +78,11 @@
 }
 
 .form-panel-active-row {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
+  justify-content: flex-start;
+  gap: 6px;
+  width: fit-content;
 }
 
 .form-panel-active-row .input-label {
@@ -92,6 +92,7 @@
 .form-panel-active-checkbox {
   width: 16px;
   height: 16px;
+  margin-top: 7px;
   accent-color: var(--button-bg);
 }
 
