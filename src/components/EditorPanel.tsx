@@ -524,7 +524,14 @@ export default function EditorPanel() {
   return (
     <div className="editor-panel">
       <div className="editor-panel-header">
-        {editSession ? `Editando: ${editSession.postTitle}` : "Novo post"}
+        {editSession ? (
+          <>
+            <span className="editor-panel-header-prefix">Editando:</span>
+            <div className="editor-panel-header-title" title={editSession.postTitle}>
+              <span className="editor-panel-header-title-text">{editSession.postTitle}</span>
+            </div>
+          </>
+        ) : "Novo post"}
       </div>
 
       <textarea
