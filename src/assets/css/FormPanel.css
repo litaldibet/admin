@@ -78,17 +78,15 @@
 }
 
 .form-panel-active-row {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  color: var(--text-main);
-  font-size: 15px;
-  font-weight: 700;
-  width: fit-content;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
 }
 
-.form-panel-active-text {
-  line-height: 1;
+.form-panel-active-row .input-label {
+  font-size: 24px;
 }
 
 .form-panel-active-checkbox {
@@ -116,7 +114,7 @@
 }
 
 .form-panel-preview {
-  min-height: 130px;
+  min-height: 104px;
   resize: none;
   border: none;
   background-color: var(--bg-input);

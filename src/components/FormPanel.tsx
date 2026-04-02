@@ -323,16 +323,6 @@ export default function FormPanel() {
           <option value="PROMOCAO">Promocao</option>
         </select>
 
-        <label className="form-panel-active-row">
-          <span className="form-panel-active-text">Ativo</span>
-          <input
-            type="checkbox"
-            className="form-panel-active-checkbox"
-            checked={draft.active}
-            onChange={(event) => setActive(event.target.checked)}
-          />
-        </label>
-
         <InputLabel value="Titulo" />
         <input
           type="text"
@@ -356,6 +346,17 @@ export default function FormPanel() {
           value={draft.preview}
           onChange={(event) => setPreview(event.target.value)}
         ></textarea>
+
+        <label className="form-panel-active-row" htmlFor="post-active-toggle">
+          <InputLabel value="Ativo" />
+          <input
+            id="post-active-toggle"
+            type="checkbox"
+            className="form-panel-active-checkbox"
+            checked={draft.active}
+            onChange={(event) => setActive(event.target.checked)}
+          />
+        </label>
       </section>
     </div>
   );

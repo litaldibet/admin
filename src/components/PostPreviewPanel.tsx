@@ -17,6 +17,7 @@ type DropdownPost = {
   id: string;
   title: string;
   bannerUrl: string;
+  active: boolean;
   preview?: string;
   postType?: string;
 };
@@ -116,6 +117,7 @@ function mapCardsToDropdownPosts(cards: PostCard[]): DropdownPost[] {
     id: card.id,
     title: card.title,
     bannerUrl: card.banner_url,
+    active: card.active,
     preview: card.preview,
     postType: card.post_type,
   }));
@@ -352,6 +354,7 @@ export default function PostPreviewPanel() {
                   id={post.id}
                   title={post.title}
                   bannerUrl={post.bannerUrl}
+                  isActive={post.active}
                   isActionsDisabled={isActionsDisabled}
                   onDelete={openDeleteModal}
                   onEdit={openEditConfirm}
