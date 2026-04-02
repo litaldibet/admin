@@ -199,6 +199,7 @@ export default function PostPreviewPanel() {
         title: postData.title,
         preview: postData.preview,
         content_markdown: editableMarkdown,
+        active: postData.active,
         banner: null
       });
 

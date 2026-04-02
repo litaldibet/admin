@@ -13,6 +13,7 @@ export function PostDraftProvider({ children }: { children: ReactNode }) {
     title: "",
     preview: "",
     content_markdown: "",
+    active: true,
     banner: null,
     tempImages: []
   });
@@ -34,6 +35,10 @@ export function PostDraftProvider({ children }: { children: ReactNode }) {
 
   const setContentMarkdown = useCallback((content_markdown: string) => {
     setDraft((prev) => ({ ...prev, content_markdown }));
+  }, []);
+
+  const setActive = useCallback((active: boolean) => {
+    setDraft((prev) => ({ ...prev, active }));
   }, []);
 
   const setBanner = useCallback((banner: File | null) => {
@@ -69,6 +74,7 @@ export function PostDraftProvider({ children }: { children: ReactNode }) {
     setTitle,
     setPreview,
     setContentMarkdown,
+    setActive,
     setBanner,
     setTempImages,
     setPreviewMarkdown,
@@ -85,6 +91,7 @@ export function PostDraftProvider({ children }: { children: ReactNode }) {
     setTitle,
     setPreview,
     setContentMarkdown,
+    setActive,
     setBanner,
     setTempImages,
     setPreviewMarkdown,

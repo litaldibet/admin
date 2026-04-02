@@ -7,6 +7,7 @@ export default async function uploadPostService({
   title,
   preview,
   content_markdown,
+  active,
   banner,
   images,
   password
@@ -21,6 +22,7 @@ export default async function uploadPostService({
     title,
     preview,
     content_markdown,
+    active,
     banner,
     images,
     password

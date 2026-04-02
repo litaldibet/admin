@@ -77,6 +77,26 @@
   box-shadow: none;
 }
 
+.form-panel-active-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-main);
+  font-size: 15px;
+  font-weight: 700;
+  width: fit-content;
+}
+
+.form-panel-active-text {
+  line-height: 1;
+}
+
+.form-panel-active-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--button-bg);
+}
+
 .form-panel-input-text {
   border: none;
   height: 38px;

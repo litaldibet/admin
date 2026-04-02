@@ -36,7 +36,16 @@ function toErrorMessage(error: unknown, fallback: string): string {
 }
 
 export default function FormPanel() {
-  const { draft, tempReloadToken, setCategory, setTitle, setPreview, setBanner, setTempImages } = usePostDraft();
+  const {
+    draft,
+    tempReloadToken,
+    setCategory,
+    setTitle,
+    setPreview,
+    setActive,
+    setBanner,
+    setTempImages
+  } = usePostDraft();
   const [imageItems, setImageItems] = useState<LocalImageItem[]>([]);
   const [isLoadingTemp, setIsLoadingTemp] = useState(false);
   const [nextImageId, setNextImageId] = useState(1);
@@ -313,6 +322,16 @@ export default function FormPanel() {
           <option value="BLOG">Blog</option>
           <option value="PROMOCAO">Promocao</option>
         </select>
+
+        <label className="form-panel-active-row">
+          <span className="form-panel-active-text">Ativo</span>
+          <input
+            type="checkbox"
+            className="form-panel-active-checkbox"
+            checked={draft.active}
+            onChange={(event) => setActive(event.target.checked)}
+          />
+        </label>
 
         <InputLabel value="Titulo" />
         <input

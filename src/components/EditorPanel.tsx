@@ -236,6 +236,10 @@ function hasPendingDraftChanges(draft: PostDraftState, isEditing: boolean): bool
     return true;
   }
 
+  if (!draft.active) {
+    return true;
+  }
+
   if (draft.title.trim() || draft.preview.trim() || draft.content_markdown.trim()) {
     return true;
   }
@@ -402,6 +406,7 @@ export default function EditorPanel() {
         title: draft.title,
         preview: draft.preview,
         content_markdown: draft.content_markdown,
+        active: draft.active,
         banner: draft.banner,
         images: downloadedImages,
         password: password.trim()
@@ -500,6 +505,7 @@ export default function EditorPanel() {
         title: "",
         preview: "",
         content_markdown: "",
+        active: true,
         banner: null,
         tempImages: []
       });

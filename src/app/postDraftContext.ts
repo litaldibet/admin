@@ -15,6 +15,7 @@ export type PostDraftState = {
   title: string;
   preview: string;
   content_markdown: string;
+  active: boolean;
   banner: File | null;
   tempImages: TempImageItem[];
 };
@@ -33,6 +34,7 @@ export type PostDraftContextValue = {
   setTitle: (title: string) => void;
   setPreview: (preview: string) => void;
   setContentMarkdown: (content: string) => void;
+  setActive: (active: boolean) => void;
   setBanner: (banner: File | null) => void;
   setTempImages: (items: TempImageItem[]) => void;
   setPreviewMarkdown: (markdown: string) => void;

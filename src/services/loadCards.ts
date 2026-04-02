@@ -3,7 +3,9 @@ import type { LoadCardsResponse } from '@shared/contracts/loadCards'
 import { handleTypedRequest } from '@shared/services/requestHelpers'
 
 export default async function loadCardsService() {
-  const result = await handleTypedRequest<LoadCardsResponse>(fetch(loadCards, {
+  const url = `${loadCards}?include_inactive=true`
+
+  const result = await handleTypedRequest<LoadCardsResponse>(fetch(url, {
     method: "GET"
   }))
 

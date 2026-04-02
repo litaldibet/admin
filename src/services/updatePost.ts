@@ -8,6 +8,7 @@ export default async function updatePostService({
   title,
   preview,
   content_markdown,
+  active,
   banner,
   images,
   password
@@ -23,6 +24,7 @@ export default async function updatePostService({
     title,
     preview,
     content_markdown,
+    active,
     banner,
     images,
     password
