@@ -3,13 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "config": {
+    "pagesCname": "admin.litaldibet.com.br"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "pnpm build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "node ../shared/scripts/deploy-pages.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.98.0",
